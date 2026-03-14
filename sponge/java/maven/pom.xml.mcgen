@@ -4,18 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>${BUILD_COORDS.groupId}</groupId>
-  <artifactId>${BUILD_COORDS.artifactId}</artifactId>
-  <version>${BUILD_COORDS.version}</version>
+  <groupId>${GROUP_ID}</groupId>
+  <artifactId>${ARTIFACT_ID}</artifactId>
+  <version>${VERSION}</version>
   <packaging>jar</packaging>
 
-  <name>${BUILD_COORDS.artifactId}</name>
+  <name>${ARTIFACT_ID}</name>
 
   <properties>
-    <java.version>${JAVA_VERSION}</java.version>
-#if (${LANGUAGE} == 'Kotlin')
-    <kotlin.version>${KOTLIN_VERSION}</kotlin.version>
-#end
+    <java.version>${JDK_VERSION}</java.version>
     <spongeapi.version>${SPONGEAPI_VERSION}</spongeapi.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -78,9 +75,6 @@
 
   <build>
     <defaultGoal>clean package</defaultGoal>
-#if (${LANGUAGE} == 'Kotlin')
-    <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-#end
     <resources>
       <resource>
         <directory>${project.basedir}/src/main/resources</directory>
@@ -88,38 +82,6 @@
       </resource>
     </resources>
     <plugins>
-#if (${LANGUAGE} == 'Kotlin')
-      <plugin>
-        <groupId>org.jetbrains.kotlin</groupId>
-        <artifactId>kotlin-maven-plugin</artifactId>
-        <version>${kotlin.version}</version>
-        <executions>
-          <execution>
-            <id>compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <jvmTarget>${java.version}</jvmTarget>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.3</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-#else
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -129,7 +91,6 @@
           <target>${java.version}</target>
         </configuration>
       </plugin>
-#end
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>templating-maven-plugin</artifactId>
@@ -199,12 +160,5 @@
       <version>${spongeapi.version}</version>
       <scope>provided</scope>
     </dependency>
-#if (${LANGUAGE} == 'Kotlin')
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-stdlib-jdk8</artifactId>
-      <version>${kotlin.version}</version>
-    </dependency>
-#end
   </dependencies>
 </project>

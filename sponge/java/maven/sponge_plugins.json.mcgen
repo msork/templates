@@ -1,0 +1,31 @@
+{
+  "loader": {
+    "name": "java_plain",
+    "version": "1.0"
+  },
+  "license": "${LICENSE_ID}",
+  "plugins": [
+    {
+      "id": "${PLUGIN_ID}",
+      "name": "${PLUGIN_NAME}",
+      "version": "${version}",
+      "entrypoint": "${FULL_MAIN_CLASS}",
+      "description": "${DESCRIPTION}",
+      "branding": {},
+      "links": {
+        "homepage": "${WEBSITE}"
+      },
+      "contributors": [
+        ${MAVEN_AUTHORS_BLOCK}
+      ],
+      "dependencies": [
+        {
+          "id": "spongeapi",
+          "version": "${spongeapi.version}",
+          "load-order": "after",
+          "optional": false
+        }
+      ]
+    }
+  ]
+}

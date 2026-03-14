@@ -1,4 +1,4 @@
-package ${MAIN_CLASS.packageName}
+package ${GROUP_ID}.${PLUGIN_ID}
 
 import com.google.inject.Inject
 import net.kyori.adventure.identity.Identity
@@ -26,7 +26,7 @@ import org.spongepowered.plugin.builtin.jvm.Plugin
  * <p>All methods are optional -- some common event registrations are included as a jumping-off point.</p>
  */
 @Plugin("${PLUGIN_ID}")
-class ${MAIN_CLASS.className} @Inject constructor(
+class ${MAIN_CLASS} @Inject constructor(
     val container: PluginContainer,
     val logger: Logger
 ) {

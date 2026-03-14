@@ -1,0 +1,61 @@
+import org.spongepowered.gradle.plugin.config.PluginLoaders
+import org.spongepowered.plugin.metadata.model.PluginDependency
+
+plugins {
+    kotlin("jvm") version "${KOTLIN_VERSION}"
+    id("com.gradleup.shadow") version "8.3.10"
+    id("org.spongepowered.gradle.plugin") version "2.3.0"
+}
+
+group = "${GROUP_ID}"
+version = "${VERSION}"
+
+repositories {
+    mavenCentral()
+    maven("https://repo.spongepowered.org/maven/") {
+        name = "spongepowered-repo"
+    }
+}
+
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+}
+
+sponge {
+    apiVersion("${SPONGEAPI_VERSION}")
+    license("${LICENSE_ID}")
+    loader {
+        name(PluginLoaders.JAVA_PLAIN)
+        version("1.0")
+    }
+    plugin("${PLUGIN_ID}") {
+        displayName("${PLUGIN_NAME}")
+        entrypoint("${FULL_MAIN_CLASS}")
+        description("${DESCRIPTION}")
+        links {
+            homepage("${WEBSITE}")
+            // source("<PUT SOURCE URL HERE>")
+            // issues("<PUT ISSUES URL HERE>")
+        }
+        ${GRADLE_AUTHORS_BLOCK}
+        dependency("spongeapi") {
+            loadOrder(PluginDependency.LoadOrder.AFTER)
+            optional(false)
+        }
+    }
+}
+
+val javaTarget = ${JDK_VERSION} // Sponge targets a minimum of Java ${JDK_VERSION}
+kotlin {
+    jvmToolchain(javaTarget)
+}
+
+tasks.build {
+    dependsOn("shadowJar")
+}
+
+// Make sure all tasks which produce archives (jar, sources jar, javadoc jar, etc) produce more consistent output
+tasks.withType<AbstractArchiveTask>().configureEach {
+    isReproducibleFileOrder = true
+    isPreserveFileTimestamps = false
+}
